@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamFlow - Управление задачами</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="logo">TeamFlow</div>
+        <nav>
+            <button class="nav-btn active" onclick="showSection('dashboard')">Дашборд</button>
+            <button class="nav-btn" onclick="showSection('tasks')">Задачи</button>
+            <button class="nav-btn" onclick="showSection('filter')">Умный фильтр</button>
+            <button class="nav-btn" onclick="showSection('meetings')">Совещания</button>
+            <button class="nav-btn" onclick="showSection('team')">Команда</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- РАЗДЕЛ: ДАШБОРД -->
+        <section id="dashboard" class="page active">
+            <h1>Привет, Анна! 👋</h1>
+            
+            <div class="grid">
+                <!-- Мои задачи -->
+                <div class="card">
+                    <h2>Мои задачи на сегодня</h2>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 40%;"></div></div>
+                    <ul class="task-list">
+                        <li><input type="checkbox"> <span>Сделать макет лендинга</span> <span class="badge high">Критично</span></li>
+                        <li><input type="checkbox"> <span>Подготовить презентацию</span> <span class="badge mid">Важно</span></li>
+                        <li><input type="checkbox" checked> <span>Созвон с командой</span></li>
+                    </ul>
+                </div>
+
+                <!-- Ближайшее совещание -->
+                <div class="card">
+                    <h2>Ближайшее совещание</h2>
+                    <div class="meeting-info">
+                        <h3>Обсуждение нового дизайна</h3>
+                        <p>📅 Сегодня, 15:00 - 16:00</p>
+                        <p>👥 Участники: Иван, Мария</p>
+                        <span class="badge high">Важная тема</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- РАЗДЕЛ: ЗАДАЧИ -->
+        <section id="tasks" class="page">
+            <div class="header-flex">
+                <h1>Все задачи</h1>
+                <button class="primary-btn">+ Создать задачу</button>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active">Все</button>
+                <button class="filter-btn">Мои задачи</button>
+                <button class="filter-btn">Просроченные</button>
+            </div>
+
+            <div class="card task-card">
+                <div class="task-header">
+                    <h3>Сделать макет лендинга</h3>
+                    <span class="badge high">Критично</span>
+                </div>
+                <p>Нужно отрисовать главную страницу и форму входа.</p>
+                <div class="tags">
+                    <span>Дизайн</span> <span>UI/UX</span>
+                </div>
+                <div class="task-footer">
+                    <span>Исполнитель: Анна</span>
+                    <span>Дедлайн: Сегодня</span>
+                </div>
+            </div>
+
+            <div class="card task-card">
+                <div class="task-header">
+                    <h3>Настроить базу данных</h3>
+                    <span class="badge mid">Важно</span>
+                </div>
+                <p>Поднять PostgreSQL и настроить миграции.</p>
+                <div class="tags">
+                    <span>Backend</span> <span>Базы данных</span>
+                </div>
+                <div class="task-footer">
+                    <span>Исполнитель: Иван</span>
+                    <span>Дедлайн: Завтра</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- РАЗДЕЛ: УМНЫЙ ФИЛЬТР -->
+        <section id="filter" class="page">
+            <h1>Умный фильтр задач</h1>
+
+
+<p class="subtitle">Выберите сотрудника, и система отсеет задачи, которые не подходят под его компетенции.</p>
+            
+            <div class="card filter-card">
+                <label for="user-select"><strong>Выберите сотрудника:</strong></label>
+                <select id="user-select" onchange="filterTasks()">
+                    <option value="anna">Анна (Дизайнер)</option>
+                    <option value="ivan">Иван (Разработчик)</option>
+                    <option value="maria">Мария (Аналитик)</option>
+                </select>
+            </div>
+
+            <div id="filtered-tasks-container">
+                <!-- Сюда будут выводиться задачи через JavaScript -->
+            </div>
+        </section>
+
+        <!-- РАЗДЕЛ: СОВЕЩАНИЯ -->
+        <section id="meetings" class="page">
+            <div class="header-flex">
+                <h1>Расписание совещаний</h1>
+                <button class="primary-btn">+ Создать совещание</button>
+            </div>
+
+            <div class="card">
+                <div class="meeting-item border-high">
+                    <h3>Обсуждение нового дизайна</h3>
+                    <p><strong>Время:</strong> Сегодня, 15:00</p>
+                    <p><strong>Участники:</strong> Анна, Иван, Мария</p>
+                    <p><strong>Повестка:</strong> Утвердить макет лендинга.</p>
+                    <span class="badge high">Важная тема (нельзя переносить)</span>
+                </div>
+                
+                <div class="meeting-item border-mid">
+                    <h3>Планирование спринта</h3>
+                    <p><strong>Время:</strong> Завтра, 11:00</p>
+                    <p><strong>Участники:</strong> Вся команда</p>
+                    <p><strong>Повестка:</strong> Разбор задач на неделю.</p>
+                    <span class="badge mid">Можно подвинуть</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- РАЗДЕЛ: КОМАНДА -->
+        <section id="team" class="page">
+            <h1>Наша команда</h1>
+            <div class="grid">
+                <div class="card user-card">
+                    <div class="avatar">А</div>
+                    <h3>Анна</h3>
+                    <p class="role">Дизайнер</p>
+                    <div class="tags"><span>Дизайн</span> <span>UI/UX</span></div>
+                    <p class="status free">Загрузка: 2 задачи (Свободна)</p>
+                </div>
+                
+                <div class="card user-card">
+                    <div class="avatar">И</div>
+                    <h3>Иван</h3>
+                    <p class="role">Разработчик</p>
+                    <div class="tags"><span>Backend</span> <span>Frontend</span></div>
+                    <p class="status busy">Загрузка: 5 задач (Перегружен)</p>
+                </div>
+
+                <div class="card user-card">
+                    <div class="avatar">М</div>
+                    <h3>Мария</h3>
+                    <p class="role">Аналитик</p>
+                    <div class="tags"><span>Аналитика</span> <span>Тестирование</span></div>
+                    <p class="status free">Загрузка: 1 задача (Свободна)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
